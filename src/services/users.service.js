@@ -14,8 +14,8 @@ export default class UserService{
                 
             } catch (error) {
 
-                req.logger.error("Error en la capa de servicio metodo createUser:",error);
-                
+                //req.logger.error("Error en la capa de servicio metodo createUser:",error);
+                console.log("Error en la capa de servicio metodo createUser:",error);
             }
     
 

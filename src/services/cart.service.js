@@ -16,8 +16,9 @@ export default class CartsService{
 
             } catch (error) {
                 
-                req.logger.error("Error en el createCarts - Carts.Service-->",error);
-            }
+                //req.logger.error("Error en el createCarts - Carts.Service-->",error);
+           console.log("Error en el createCarts - Carts.Service-->",error);
+        }
 
       }
 

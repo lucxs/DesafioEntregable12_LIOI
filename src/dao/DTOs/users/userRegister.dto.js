@@ -5,7 +5,7 @@ export default class userRegisterDTO {
         this.last_name= datauser.lastname;
         this.email= datauser.email;
         this.password= datauser.password;
-        this.cart = null,
+        this.cart = datauser.cart,
         this.role = datauser.role
     }
 

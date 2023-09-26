@@ -1,20 +1,26 @@
 import express from 'express'
 import prodsController from '../controllers/products.controller.js';
-import {middlewarePassportJWT, middlewarePassportJWTAdmin,middlewarePassportJWTUser, middlewareAccessToCart} from '../middlewares/auth.middleware.js'
+import {middlewarePassportJWT, middlewarePassportJWTAdmin,middlewarePassportJWTUser, middlewareAccessToCart,middlewarePassportUser} from '../middlewares/auth.middleware.js'
 import cartsController from '../controllers/carts.controller.js';
 const viewRouter =express();
 
 
-//Paso la lista de productos a home.handlebars
-viewRouter.get('/', async(req, res)=>{
+//Paso la lista de productos a home.handlebars y el user actualmente loggeado
+viewRouter.get('/',middlewarePassportUser, async(req, res)=>{
             
             
             let LimitProducts = req.query.limit;
             let pageProducts = req.query.page;
             let queryProducts = req.query.marca;
             let sortProducts = req.query.sort;
-
-           
+            let user = null
+            if (req.user.user) {
+                user = {"name":req.user.user.first_name,
+            "role":req.user.user.role,
+             "cid":req.user.user.cart,
+            }
+            }
+             
     try {
 
     
@@ -39,7 +45,7 @@ viewRouter.get('/', async(req, res)=>{
                 return res.render('serverError', {text})
             }else{
 
-           return res.render('home', {prodsPaginate})
+           return res.render('home', {prodsPaginate, user})
         }
         
     } catch (error) {
@@ -53,16 +59,21 @@ viewRouter.get('/', async(req, res)=>{
 
 viewRouter.get('/adminDashboard',middlewarePassportJWTAdmin,async(req, res)=>{
 
-    const user =  req.user
+    const user =  req.user.user
+    console.log(user);
 
-    req.logger.debug("El user admin - adminDashboard:", user);
+    //Si user es premium le paso el id a adminDashboard
+    if (user.role ==="premium") {
 
-    let LimitProducts = req.query.limit;
-    let pageProducts = req.query.page;
-    let queryProducts = req.query.query;
-    let sortProducts = req.query.marca;
+       const userID = user._id
 
-    res.render('adminDashboard', LimitProducts, pageProducts, queryProducts, sortProducts);
+    res.render('adminDashboard',{userID});
+        
+    }else{
+        res.render('adminDashboard');
+
+    }
+    
 
 
 }) 
@@ -71,6 +82,13 @@ viewRouter.get('/adminDashboard',middlewarePassportJWTAdmin,async(req, res)=>{
 viewRouter.get('/carts/:cid',middlewareAccessToCart, async(req,res)=>{
 
         let cid = req.params.cid;
+        let user = null
+            if (req.user.user) {
+                user = {"name":req.user.user.first_name,
+            "role":req.user.user.role,
+             "cid":req.user.user.cart,
+            }
+            }
     
 try {
 
@@ -78,7 +96,7 @@ try {
 
     req.logger.debug(cartById);
     
-    res.render('carts', {cartById});
+    res.render('carts', {cartById, user});
 
     
 } catch (error) {

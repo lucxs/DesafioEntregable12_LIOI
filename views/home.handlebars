@@ -7,7 +7,7 @@
 
     {{#if user}}
         
-    <h3>welcome {{user.first_name}}, ¡¡Usted tiene privilegios de: {{role}}</h3>
+    <h3>welcome {{user.name}}, ¡¡Usted tiene privilegios de: {{user.role}}</h3>
         
     {{/if}}
 
@@ -15,7 +15,7 @@
         {{#each prodsPaginate.docs}}
 
             <div class="card prods__cards" style="width: 18rem;">
-                <form action="api/carts/6490d95c437c8c2412dbaf4b/product/{{this.id}}" method="post">
+                <form action="api/carts/{{user.cart}}/product/{{this.id}}" method="post">
                 <img src="https://stylewatchio.vtexassets.com/arquivos/ids/175815/RT123591_00.jpg?v=1773371444" class="card-img-top card prods__img" alt="Gafas de sol">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>

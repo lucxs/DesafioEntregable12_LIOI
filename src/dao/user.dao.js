@@ -15,8 +15,8 @@ async getAllUsers(){
         
     } catch (error) {
 
-        req.logger.error("Error en la capa de persistencia. Metodo getAllUsers:",error);
-        
+        //req.logger.error("Error en la capa de persistencia. Metodo getAllUsers:",error);
+        console.log("Error en la capa de persistencia. Metodo getAllUsers:",error);
     }
 }
 
@@ -40,8 +40,8 @@ async addUser(userData){
 
     } catch (error) {
 
-        req.logger.error("Error en la capa de persistencia. Metodo addUser:",error);
-        
+        //req.logger.error("Error en la capa de persistencia. Metodo addUser:",error);
+        console.log("Error en la capa de persistencia. Metodo addUser:",error);
     }
 }
 

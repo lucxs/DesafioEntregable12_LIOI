@@ -1,4 +1,5 @@
 import { cartModel } from "../models/cart.model.js";
+import { Logger } from "../middlewares/logger.middleware.js";
 
 class CartsDAO{
 
@@ -13,8 +14,8 @@ class CartsDAO{
     
                 } catch (error) {
     
-                        req.logger.error("error dao-carts: createCarts: ", error);
-                    
+                       //await req.logger.error("error dao-carts: createCarts: ", error);
+                        console.log("error dao-carts: createCarts: ", error);
                 }
     
             }

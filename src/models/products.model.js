@@ -31,6 +31,12 @@ const productsScheme = new mongoose.Schema({
     carts:{
             type: Array,
             default: []
+    },
+    owner:{
+            type: mongoose.Schema.Types.ObjectId,
+             ref: 'usersJWT',
+             default:"admin"
+
     }
 
 })

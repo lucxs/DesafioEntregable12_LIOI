@@ -1,6 +1,7 @@
 import passport from 'passport'
 import GitHubStrategy from 'passport-github2';
 import userController from '../controllers/user.controller.js';
+import cartsController from '../controllers/carts.controller.js';
 import { comparePassword, hashPassword } from '../utils/encript.util.js';
 import local from 'passport-local';
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -27,17 +28,19 @@ new LocalStrategy(
                 return done(null, false, {message: 'User already exists'})
             }
 
+            const newCard = await cartsController.createCarts();
+            
             const hashedPassword = hashPassword(password);
             const newUser = await userController.createUser({
                 name: dataUser.firstName,
                 lastname: dataUser.lastName,
                 email: username,
                 password: hashedPassword,
-                cart:null,
+                cart: newCard._id,
                 role: dataUser.role
             })
 
-            return done(null, newUser)
+             return done(null, newUser)
 
     } catch (error) {
         

@@ -1,5 +1,22 @@
 import passport from 'passport';
 
+//Middleware generico para pasar el userData
+
+const middlewarePassportUser = async (req, res, next) => {
+	passport.authenticate('current', { session: false }, (err, usr, info) => {
+		if (err) {
+			next(err);
+		}
+
+		if (!usr) {
+			req.user = null;
+		}
+
+		req.user = usr;
+		next();
+	})(req, res, next);
+};
+
 
 const middlewarePassportJWT = async (req, res, next) => {
 	passport.authenticate('current', { session: false }, (err, usr, info) => {
@@ -32,7 +49,7 @@ const middlewarePassportJWTAdmin = async (req, res, next) => {
 	   
 		   }
 
-		   	 if (usr.user.role === "admin") {
+		   	 if (usr.user.role === "admin" ||usr.user.role ==="premium" ) {
 
 					req.user =  usr;
 			 		return next();
@@ -112,6 +129,6 @@ const middlewareAccessToCart = async (req, res, next) => {
 
 
 
-export { middlewarePassportJWT,middlewarePassportJWTAdmin, middlewarePassportJWTUser,middlewareAccessToCart };
+export { middlewarePassportJWT,middlewarePassportJWTAdmin, middlewarePassportJWTUser,middlewareAccessToCart, middlewarePassportUser };
 
 

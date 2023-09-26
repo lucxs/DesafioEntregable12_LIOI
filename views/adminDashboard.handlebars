@@ -57,6 +57,16 @@
     <input type="text" id="marca" placeholder="marca">
     <br>
     <br>
+    {{#if userID}}
+    <label for="rol">Rol de usuario:</label>
+    <br>
+    <br>
+    <select name="roleOwner">
+      <option name="owner"value="{{userID}}">owner</option>
+    </select>
+    {{/if}}
+    <br>
+    <br>
     <button onclick="addProduct()">Enviar</button> 
 
     

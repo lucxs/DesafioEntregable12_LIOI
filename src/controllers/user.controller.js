@@ -21,8 +21,8 @@ class UsersController {
         
         } catch (error) {
 
-            req.logger.error("Error en la creación del user - userController");
-            
+            //req.logger.error("Error en la creación del user - userController",error);
+            console.log("Error en la creación del user - userController",error);
         }
     }
 
