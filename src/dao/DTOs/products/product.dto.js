@@ -10,5 +10,6 @@ export default class addingProdDTO{
         this.status = dataProduct.status
         this.marca = dataProduct.marca
         this.carts = dataProduct.carts
+        this.owner = dataProduct.owner
     }
 }

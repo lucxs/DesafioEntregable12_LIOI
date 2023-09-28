@@ -3,6 +3,7 @@ import prodsController from "../controllers/products.controller.js";
 import { generateProducts } from "../utils/generate.js";
 import CustomErrors from "../tools/CustomErrors.js";
 import EErros from "../tools/EErrors.js";
+import { middlewarePassportUserOnlyRoleAndId } from "../middlewares/auth.middleware.js";
 
 
 const prodsRouter = Router();
@@ -101,13 +102,41 @@ try {
 
     //Borrando productos
 
-prodsRouter.delete('/', async(req, res)=>{
-
+prodsRouter.delete('/:pid',middlewarePassportUserOnlyRoleAndId, async(req, res)=>{
+        
 try {
-         prodsController.deleteProduct(req.query.pid)
 
-         res.status(200).send({"Producto de ID":req.query.pid+" eliminado"})
+    console.log("datos del user: ",req.user);
+        console.log("id de prod: ",req.params.pid);
+        let pid =req.params.pid
+        let userID = req.user.id
+    if (req.user.role ==='admin') {
+        prodsController.deleteProduct(pid);
+        res.status(200).send({"Producto de ID":pid+" eliminado"})
+    }
     
+    if(req.user.role ==='premium'){
+        
+        const allprods = await prodsController.getProds()
+        const prodsWithOwner = allprods.find((prod)=>prod.owner == userID)
+
+            if (!prodsWithOwner == undefined) {
+                console.log("ESTE ES el prod con propietario:",prodsWithOwner._id.toString());
+
+                    prodsController.deleteProduct(prodsWithOwner._id.toString());
+
+                    console.log({"Producto de ID":pid+" eliminado"});
+                    res.status(200).send({"Producto de ID":pid+" eliminado"})
+            }else{
+                console.log({"message":"Error, usted no puede borrar ese producto, no es de su propiedad"});
+                res.status(401).send({"message":"Error, usted no puede borrar ese producto, no es de su propiedad"})
+            }
+        
+
+        
+    }
+
+        
 } catch (error) {
 
     res.status(404).send(error);

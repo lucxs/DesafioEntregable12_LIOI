@@ -22,6 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(Logger)
+
 //-----------------------------------------------------------------------------------------------------//
 
 
@@ -115,19 +116,20 @@ socketServer.on('connection', async (socket)=>{
 
         //Elimino el producto
 
-        socket.on('prodIdToDelete', async(data)=>{
+        // socket.on('prodIdToDelete', async( data)=>{
 
-            try {
+        //     try {
 
-                  prodsController.deleteProduct(data)
+        //           //prodsController.deleteProduct(data)
                 
-            } catch (error) {
+        //     } catch (error) {
 
-                req.logger.error("Error en app.js en el envio del id para deletear producto ==>", error);
+        //         //req.logger.error("Error en app.js en el envio del id para deletear producto ==>", error);
+        //         console.log("Error en app.js en el envio del id para deletear producto ==>", error);
                 
-            }
+        //     }
 
-        })
+        // })
 
                 //Socket chat
 

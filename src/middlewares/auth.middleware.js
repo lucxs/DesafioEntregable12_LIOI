@@ -17,6 +17,22 @@ const middlewarePassportUser = async (req, res, next) => {
 	})(req, res, next);
 };
 
+		//paso solo el rol del user a nivel app
+const middlewarePassportUserOnlyRoleAndId = async (req, res, next) => {
+	passport.authenticate('current', { session: false }, (err, usr, info) => {
+		if (err) {
+			next(err);
+		}
+
+		if (!usr) {
+			req.user = null;
+		}
+
+		req.user = {"id":usr.user._id, "role":usr.user.role};
+		next();
+	})(req, res, next);
+};
+
 
 const middlewarePassportJWT = async (req, res, next) => {
 	passport.authenticate('current', { session: false }, (err, usr, info) => {
@@ -129,6 +145,6 @@ const middlewareAccessToCart = async (req, res, next) => {
 
 
 
-export { middlewarePassportJWT,middlewarePassportJWTAdmin, middlewarePassportJWTUser,middlewareAccessToCart, middlewarePassportUser };
+export { middlewarePassportJWT,middlewarePassportJWTAdmin, middlewarePassportJWTUser,middlewareAccessToCart, middlewarePassportUser, middlewarePassportUserOnlyRoleAndId };
 
 

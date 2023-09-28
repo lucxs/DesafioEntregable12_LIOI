@@ -60,7 +60,6 @@ viewRouter.get('/',middlewarePassportUser, async(req, res)=>{
 viewRouter.get('/adminDashboard',middlewarePassportJWTAdmin,async(req, res)=>{
 
     const user =  req.user.user
-    console.log(user);
 
     //Si user es premium le paso el id a adminDashboard
     if (user.role ==="premium") {

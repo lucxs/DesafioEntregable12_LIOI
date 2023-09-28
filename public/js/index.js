@@ -40,7 +40,6 @@ socket.on('products', async(allprods)=>{
 
 function addProduct(e){
     
-    e.preventDefault()
 
     let title = document.getElementById("title").value
     let description = document.getElementById("description").value
@@ -50,8 +49,10 @@ function addProduct(e){
     let stock = document.getElementById("stock").value
     let status = document.getElementById("status").value
     let marca = document.getElementById("marca").value
+    let userID = document.getElementById("ownerID").value
 
-    socket.emit('addingProds', {"title": title,"description":description,"price":price,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca})
+    
+    socket.emit('addingProds', {"title": title,"description":description,"price":price,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "owner":userID})
 
         alert("Se agrego un nuevo producto")
 }
@@ -92,11 +93,34 @@ function addProductToCart(path){
 
  function deleteProd(e){
 
-    e.preventDefault()
 
-    let idProd = document.getElementById("idprod").value
+     let idProd = document.getElementById("idprod").value
+     let url = 'api/products/' + idProd;
+     fetch(url,
+        {
+           method: 'DELETE',
+           headers: {
+           'Content-Type': 'application/json'
+           }
+       })
+       .then(response => {
+           if (response.ok) {
+           console.log('La solicitud fue exitosa');
+           alert("Producto eliminado correctamente")
+           
+           } else {
+           console.log('La solicitud falló');
+           
+           }
+       })
+       .catch(error => {
+           console.log('Error al enviar la solicitud:', error);
+           
+       });
 
-              socket.emit('prodIdToDelete', idProd)
+    //           socket.emit('prodIdToDelete', idProd)
+
+
 
 }
 

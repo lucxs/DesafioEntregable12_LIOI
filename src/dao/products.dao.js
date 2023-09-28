@@ -126,10 +126,11 @@ async updateProductStock(id, newValue){
 async deleteProduct(data){
 
         try {
-            await this.prodModel.deleteOne({_id: data.toString()})
+            await this.model.deleteOne({_id: data.toString()})
         } catch (error) {
             
-                req.logger.error("Error delete product dao: ",error);
+                //req.logger.error("Error delete product dao: ",error);
+                console.log("Error delete product dao: ",error);
         }
 
 }
