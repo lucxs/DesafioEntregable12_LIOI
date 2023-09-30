@@ -57,36 +57,6 @@ function addProduct(e){
         alert("Se agrego un nuevo producto")
 }
 
-//AddingProdToCart
-function addProductToCart(path){
-    
-    fetch(path,
-        {
-           method: 'POST',
-           headers: {
-           'Content-Type': 'application/json'
-           }
-       })
-       .then(response => {
-           if (response.ok) {
-           console.log('La solicitud fue exitosa');
-           alert("Producto agregado correctamente al carrito")
-           setTimeout(() => {
-            window.location.pathname = "/carts/6490d95c437c8c2412dbaf4b"
-           }, 1000);
-           
-           } else {
-           console.log('La solicitud falló');
-           
-           }
-       })
-       .catch(error => {
-           console.log('Error al enviar la solicitud:', error);
-           
-       });
-                 
- }
-
 
 //Funcion del onclick para eliminar productos del home
 
@@ -118,13 +88,64 @@ function addProductToCart(path){
            
        });
 
-    //           socket.emit('prodIdToDelete', idProd)
-
-
-
 }
 
-            
+//Restablecer password
+
+ function restorePass(e){
+
+
+    const EmailUser = prompt("Ingrese su correo para restablecer su contraseña")
+
+     alert(EmailUser)
+     console.log(EmailUser);
+
+        const path ='api/users/sendEmail/restorePass/'+ EmailUser
+
+     fetch(path,
+        {
+           method: 'POST',
+           headers: {
+           'Content-Type': 'application/json'
+           }
+       })
+       .then(response => {
+           if (response.ok) {
+           console.log('La solicitud fue exitosa');
+           alert("Verifique su casilla de correo para restablecer su contraseña")
+           
+           } else {
+           console.log('La solicitud falló');
+           
+           }
+       })
+       .catch(error => {
+           console.log('Error al enviar la solicitud:', error);
+           
+       });
+}
+
+
+//Form Restablecer password
+const form = document.getElementById("resetPasswordForm");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const passwordError = document.getElementById("passwordError");
+
+        form.addEventListener("submit", function(event) {
+
+                    console.log(event);
+            // if (passwordInput.value !== confirmPasswordInput.value) {
+            //     passwordError.textContent = "Las contraseñas no coinciden.";
+            //     alert("La contraseña debe coincidir")
+            //     event.preventDefault(); 
+            // } else {
+            //     passwordError.textContent = "";
+
+
+            // }
+        });
+
 
 //Seccion del chat
 

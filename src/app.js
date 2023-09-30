@@ -114,23 +114,6 @@ socketServer.on('connection', async (socket)=>{
             
         })
 
-        //Elimino el producto
-
-        // socket.on('prodIdToDelete', async( data)=>{
-
-        //     try {
-
-        //           //prodsController.deleteProduct(data)
-                
-        //     } catch (error) {
-
-        //         //req.logger.error("Error en app.js en el envio del id para deletear producto ==>", error);
-        //         console.log("Error en app.js en el envio del id para deletear producto ==>", error);
-                
-        //     }
-
-        // })
-
                 //Socket chat
 
                 socket.on("message", async(data)=>{

@@ -40,7 +40,7 @@ class CartsController {
 
         try {
                 const cart = await this.cartService.getCartbyId(cid);
-                req.logger.debug(cart)
+                //req.logger.debug(cart)
                 if (!cart) {
                   throw new Error("No existe el carrito buscado");
                 }

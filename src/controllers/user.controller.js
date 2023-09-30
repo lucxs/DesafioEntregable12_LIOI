@@ -1,7 +1,7 @@
 import UserService from "../services/users.service.js";
 import userDao from "../dao/user.dao.js";
 import UserRegisterRepository from "../repositories/users/register.repositories.js";
-
+import MailingService from "../services/mail.service.js";
 
 class UsersController {
 
@@ -9,6 +9,7 @@ class UsersController {
         //Creo en el constructor el dao con filtro por DTO
         this.daoFiltered = new UserRegisterRepository(userDao)
         this.service = new UserService(userDao);
+        this.MailingService = new MailingService();
     }
 
     async createUser(userData){
@@ -39,6 +40,22 @@ class UsersController {
         const allUsers =await this.service.getAllUsers()
                 const userByEmail = allUsers.find((user)=>user.email === email)
                 return userByEmail;
+    }
+
+    async SendResetPassword(email){
+
+        const mailOptions = {
+            from: 'Optics <lioilucas75@gmail.com>',
+            to: `${email}`,
+            subject:`resetPassword`,
+            html: `<h1>You recently requested to reset your password. Use the button below to reset it. This password reset is only valid for the next hour.</h1>
+
+            <div class="btn btn-info"><a href="http://localhost:8080/resetPassword/${email}">ResetPassword</a></div>
+            `    
+        };
+
+       await this.MailingService.sendMail(mailOptions)
+
     }
 
 }

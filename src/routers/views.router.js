@@ -2,6 +2,8 @@ import express from 'express'
 import prodsController from '../controllers/products.controller.js';
 import {middlewarePassportJWT, middlewarePassportJWTAdmin,middlewarePassportJWTUser, middlewareAccessToCart,middlewarePassportUser} from '../middlewares/auth.middleware.js'
 import cartsController from '../controllers/carts.controller.js';
+import { comparePassword } from '../utils/encript.util.js';
+import userController from '../controllers/user.controller.js';
 const viewRouter =express();
 
 
@@ -14,6 +16,7 @@ viewRouter.get('/',middlewarePassportUser, async(req, res)=>{
             let queryProducts = req.query.marca;
             let sortProducts = req.query.sort;
             let user = null
+            // Calcula la URL completa del action del form en el foreach de home
             if (req.user.user) {
                 user = {"name":req.user.user.first_name,
             "role":req.user.user.role,
@@ -124,6 +127,34 @@ viewRouter.get('/login',(req,res)=>{
 
          res.render('login')
     
+})
+
+//Reset password
+
+viewRouter.get('/resetPassword/:email',(req,res)=>{
+    const email = req.params.email
+    res.render('resetPassword',{email})
+
+})
+
+viewRouter.post('/resetPass/:email', async(req,res)=>{
+
+    res.render('resetPassword')
+    req.logger.debug( req.params.email);
+    const {validPassword, confirmPassword} = req.body
+
+    if (validPassword !==confirmPassword) {
+        res.status(401).send({"message:":"los campos deben coincidir"})
+    }   
+        const userEmail = req.params.email;
+        const user = await userController.getByEmail(email)
+        if (comparePassword(user, validPassword)) {
+            res.status(401).send({"message:":"La contraseña debe ser distinta a la anterior"})
+        }
+        
+
+    console.log("La pass desde views: ",validPassword);
+
 })
 
 

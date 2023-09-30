@@ -12,10 +12,12 @@
     {{/if}}
 
     <seccion class="prods">
+
         {{#each prodsPaginate.docs}}
 
             <div class="card prods__cards" style="width: 18rem;">
-                <form action="api/carts/{{user.cart}}/product/{{this.id}}" method="post">
+              
+                <form action="api/carts/{{../user.cid}}/product/{{this.id}}"method="post">
                 <img src="https://stylewatchio.vtexassets.com/arquivos/ids/175815/RT123591_00.jpg?v=1773371444" class="card-img-top card prods__img" alt="Gafas de sol">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
@@ -26,8 +28,11 @@
                         <button class="btn btn-primary" type="submit">AddToCart</button>
                     </div>
                     </form>
+
+                
             </div>
             {{/each}}
+    
             
     </seccion>
 

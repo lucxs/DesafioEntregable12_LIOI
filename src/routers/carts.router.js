@@ -71,9 +71,9 @@ cartsRouter.get('/:cid', async(req,res)=>{
                        res.status(200).send("Producto cargado correctamente al carrito")
                         
                 } catch (error) {
-
+                        console.log(error);
                         res.status(501).send(error)
-                        req.logger.error(error);
+                         req.logger.error(error);
                         
                 }
 

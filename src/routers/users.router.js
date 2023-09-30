@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { generateToken } from "../middlewares/jwt.middleware.js";
+import userController from "../controllers/user.controller.js";
 const usersRouter = Router();
 
 
@@ -33,6 +34,20 @@ usersRouter.post('/', passport.authenticate('register',{failureRedirect: '/serve
         
        
     })
+            //Enviar correo para reset de password
+    usersRouter.post('/sendEmail/restorePass/:email',async(req,res)=>{
+                try {
+                    const email =  req.params.email
+                    await userController.SendResetPassword(email)
+                    res.status(200).redirect('/login')
+                } catch (error) {
+                    
+                    res.status(500).redirect('/serverError')
+
+                }
+            
+    })
+
 
 
 usersRouter.get('/logout',(req, res)=>{
