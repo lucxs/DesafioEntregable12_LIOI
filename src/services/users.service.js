@@ -42,6 +42,11 @@ export default class UserService{
         }
     }
 
+    async resetPassword(userEmail,Password){
+
+        return this.dao.resetPassword(userEmail,Password)
+    }
+
     
 }
 

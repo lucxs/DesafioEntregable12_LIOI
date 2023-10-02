@@ -2,7 +2,7 @@ import UserService from "../services/users.service.js";
 import userDao from "../dao/user.dao.js";
 import UserRegisterRepository from "../repositories/users/register.repositories.js";
 import MailingService from "../services/mail.service.js";
-
+import { hashPassword,comparePassword } from '../utils/encript.util.js';
 class UsersController {
 
     constructor(){
@@ -26,10 +26,6 @@ class UsersController {
             console.log("Error en la creación del user - userController",error);
         }
     }
-
-    
-
-    
 
     async getById(id){
 
@@ -56,6 +52,35 @@ class UsersController {
 
        await this.MailingService.sendMail(mailOptions)
 
+    }
+
+    async resetPassword(userEmail,validPassword, confirmPassword){
+
+        try {
+        
+            if (validPassword ==confirmPassword) {
+                const user = await userController.getByEmail(userEmail)
+                const comparePass = comparePassword(user, validPassword) 
+                console.log("La pass desde views: ",validPassword);
+                console.log(user);
+                if (comparePass) {
+                    const err ={'messageError':"La contraseña debe ser distinta a la anterior"};
+                    return err
+                }else{
+                    const passwordHashed = hashPassword(validPassword)
+                    return this.service.resetPassword(userEmail,passwordHashed)
+                    
+                }
+                        
+            }  else{
+                const err ={'messageError':"los campos deben coincidir"}
+                return err
+            }
+                
+            } catch (error) {
+                    console.log(error);
+                // req.logger.error("Error en user.ccontroller -->method resetPassword")
+            }
     }
 
 }

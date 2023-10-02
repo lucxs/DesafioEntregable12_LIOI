@@ -45,6 +45,12 @@ async addUser(userData){
     }
 }
 
+async resetPassword(userEmail,password){
+
+    return await this.model.updateOne({email:userEmail},{$set: {password: password}})
+
+}
+
 }
 
 const userDao = new UserDao();
