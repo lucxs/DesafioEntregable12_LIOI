@@ -103,6 +103,8 @@ socketServer.on('connection', async (socket)=>{
 
               
                 await prodsController.addProduct(data);
+
+                console.log("Prod nuevo llegando a app:", data);
                 
             } catch (error) {
 

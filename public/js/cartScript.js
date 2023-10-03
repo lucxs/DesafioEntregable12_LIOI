@@ -14,7 +14,7 @@
         
       console.log("Operacion exitosa");
       setTimeout(() => {
-        window.location.pathname = "/carts/6490d95c437c8c2412dbaf4b"
+        location.reload();
        }, 1000);
     }else{
         console.log('La solicitud falló');
@@ -46,7 +46,7 @@ function UpdateQProdFromCart(path){
        if (response.ok) {
         console.log("Operacion exitosa");
         setTimeout(() => {
-          window.location.pathname = "/carts/6490d95c437c8c2412dbaf4b"
+          location.reload();
          }, 1000);
        }else{
         console.log('La solicitud falló');
@@ -62,6 +62,7 @@ function UpdateQProdFromCart(path){
 
 
    function emptyCart(path){
+    console.log("La Ruta:",path);
    
       fetch(path, {
          method: 'DELETE',
@@ -73,7 +74,7 @@ function UpdateQProdFromCart(path){
          if (response.ok) {
           console.log("Operacion exitosa");
           setTimeout(() => {
-            window.location.pathname = "/carts/6490d95c437c8c2412dbaf4b"
+            location.reload();
            }, 1000);
          }else{
           console.log('La solicitud falló');
@@ -100,7 +101,7 @@ function UpdateQProdFromCart(path){
          console.log("Operacion exitosa");
          alert("Operación exitosa")
          setTimeout(() => {
-           window.location.pathname = "/carts/6490d95c437c8c2412dbaf4b"
+          location.reload();
           }, 1000);
         }else{
          console.log('La solicitud falló');

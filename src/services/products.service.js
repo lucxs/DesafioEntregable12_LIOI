@@ -8,7 +8,7 @@ export default class ProductsServices {
          
           async getProducts(){
    
-                  return await this.dao.getProducts();
+                  return await this.dao.getProducts().lean();
                   
           }
 

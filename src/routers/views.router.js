@@ -160,22 +160,25 @@ try {
 }
 
    
-    
-    
-        
-        
 
-    
 
 })
 
 
 //current
 
-viewRouter.get('/current',middlewarePassportJWT,(req, res) => {
+viewRouter.get('/current',middlewarePassportJWT,async(req, res) => {
          const user = req.user;
-         req.logger.debug("ESTE ES EL USER:",user);
-          res.render('privateCurrent',{user})
+            console.log("el user: ",user.user);
+            const allProducts =await prodsController.getProds()
+            const ownProds =await allProducts.filter((prod)=>prod.owner && prod.owner.toString() === user.user._id)
+            //console.log("Todos los prods: ",allProducts);
+            console.log("Mis productos",ownProds);
+            if (ownProds.length > 0) {
+                res.render('privateCurrent',{user, ownProds})
+            }else{
+                res.render('privateCurrent',{user})
+            }          
 });
 
 

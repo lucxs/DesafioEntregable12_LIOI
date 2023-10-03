@@ -41,9 +41,9 @@ socket.on('products', async(allprods)=>{
 function addProduct(e){
     
 
-    let title = document.getElementById("title").value
+    let name = document.getElementById("name").value
     let description = document.getElementById("description").value
-    let price = document.getElementById("price").value
+    let precio = document.getElementById("price").value
     let thumbnail = document.getElementById("thumbnail").value
     let code = document.getElementById("code").value
     let stock = document.getElementById("stock").value
@@ -52,7 +52,7 @@ function addProduct(e){
     let userID = document.getElementById("ownerID").value
 
     
-    socket.emit('addingProds', {"title": title,"description":description,"price":price,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "owner":userID})
+    socket.emit('addingProds', {"name": name,"description":description,"precio":precio,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "owner":userID})
 
         alert("Se agrego un nuevo producto")
 }
@@ -124,27 +124,6 @@ function addProduct(e){
            
        });
 }
-
-
-//Form Restablecer password
-const form = document.getElementById("resetPasswordForm");
-        const passwordInput = document.getElementById("password");
-        const confirmPasswordInput = document.getElementById("confirmPassword");
-        const passwordError = document.getElementById("passwordError");
-
-        form.addEventListener("submit", function(event) {
-
-                    console.log(event);
-            // if (passwordInput.value !== confirmPasswordInput.value) {
-            //     passwordError.textContent = "Las contraseñas no coinciden.";
-            //     alert("La contraseña debe coincidir")
-            //     event.preventDefault(); 
-            // } else {
-            //     passwordError.textContent = "";
-
-
-            // }
-        });
 
 
 //Seccion del chat

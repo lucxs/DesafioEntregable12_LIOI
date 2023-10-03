@@ -41,8 +41,7 @@ const middlewarePassportJWT = async (req, res, next) => {
 		}
 
 		if (!usr) {
-            const message = "No tiene permitido el acceso a esta seccion"
-			res.redirect('/serverError');
+            return res.send({"message":"error de usuario"});
 		}
 
 		req.user = usr;

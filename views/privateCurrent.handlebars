@@ -1,2 +1,23 @@
-<div>Bienvenido a su sección privada usuario {{user.user.first_name }} {{user.user.last_name}}
+<div><h1>Mi Perfil: {{user.user.first_name }} {{user.user.last_name}}</h1>
+
+    {{#if ownProds}}
+        {{#each ownProds}}
+            <div class="card prods__cards" style="width: 18rem;">
+              
+                <img src="https://stylewatchio.vtexassets.com/arquivos/ids/175815/RT123591_00.jpg?v=1773371444" class="card-img-top card prods__img" alt="Gafas de sol">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text">Precio: ${{this.price}}</p>
+                        <p class="card-text">Marca: {{this.marca}}</p>
+                        <p class="card-text">Stock: {{this.stock}}</p>
+                        <button class="btn btn-primary" type="submit">AddToCart</button>
+                    </div>
+                    
+            </div>
+            {{/each}}
+
+            {{else}}
+            <h3>Usted aun no ha cargado sus productos</h3>  
+            {{/if}}
 </div>
