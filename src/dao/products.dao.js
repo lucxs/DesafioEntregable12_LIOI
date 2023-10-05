@@ -46,7 +46,8 @@ class ProductsDAO{
 
         } catch (error) {
             
-                req.logger.error("Error en el addproduct - Metodo addProduct - dao -:",error);
+                //req.logger.error("Error en el addproduct - Metodo addProduct - dao -:",error);
+                console.log("Error en el addproduct - Metodo addProduct - dao -:",error);
         }
 
      }

@@ -48,6 +48,25 @@ usersRouter.post('/', passport.authenticate('register',{failureRedirect: '/serve
             
     })
 
+    usersRouter.post('/premium/:uid', async(req, res)=>{
+            try {
+                const userId = req.params.uid
+            console.log(userId);
+            const user = await userController.getById(userId)
+            console.log(user);
+            if (user.role === "premium") {
+                let role = "user"
+                return await userController.updateUserRole(userId,role)
+            }else if(user.role === "user"){
+                let role = "premium"
+                return await userController.updateUserRole(userId,role)
+            }
+            } catch (error) {
+                    req.logger.error(error)
+            }
+            
+    })
+
 
 
 usersRouter.get('/logout',(req, res)=>{

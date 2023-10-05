@@ -8,7 +8,7 @@ export default class ProductsServices {
          
           async getProducts(){
    
-                  return await this.dao.getProducts().lean();
+                  return await this.dao.getProducts();
                   
           }
 
@@ -31,8 +31,8 @@ export default class ProductsServices {
                   
                } catch (error) {
 
-                  req.logger.error("Error product.service metodo addProduct:", error);
-                  
+                  //req.logger.error("Error product.service metodo addProduct:", error);
+                  console.log("Error product.service metodo addProduct:", error);
                }
          }  
             

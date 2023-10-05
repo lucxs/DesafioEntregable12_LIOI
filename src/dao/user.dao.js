@@ -51,6 +51,18 @@ async resetPassword(userEmail,password){
 
 }
 
+async updateUserRole(uid, role){
+    try {
+        
+        return await this.model.updateOne({_id:uid},{$set: {role: role}})       
+    } catch (error) {
+        req.logger.error(error)
+        console.log(error);
+    }
+
+    
+}
+
 }
 
 const userDao = new UserDao();

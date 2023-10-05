@@ -39,8 +39,6 @@ socket.on('products', async(allprods)=>{
     //Funcion del onclick para agregar productos al home
 
 function addProduct(e){
-    
-
     let name = document.getElementById("name").value
     let description = document.getElementById("description").value
     let precio = document.getElementById("price").value
@@ -49,12 +47,19 @@ function addProduct(e){
     let stock = document.getElementById("stock").value
     let status = document.getElementById("status").value
     let marca = document.getElementById("marca").value
-    let userID = document.getElementById("ownerID").value
-
-    
-    socket.emit('addingProds', {"name": name,"description":description,"precio":precio,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "owner":userID})
+    let dataOwner = document.getElementById("dataOwner").value
+    console.log("dataOwner:", dataOwner);
+    if (dataOwner === 'admin') {
+        socket.emit('addingProds', {"name": name,"description":description,"precio":precio,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "ownerAdm":dataOwner})
 
         alert("Se agrego un nuevo producto")
+    }else{
+        socket.emit('addingProds', {"name": name,"description":description,"precio":precio,"thumbnail":thumbnail,"code":code,"stock":stock,"status":status,"marca":marca, "owner":dataOwner})
+       
+        alert("Se agrego un nuevo producto")
+    }
+      
+     
 }
 
 

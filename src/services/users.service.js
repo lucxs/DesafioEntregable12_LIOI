@@ -44,7 +44,17 @@ export default class UserService{
 
     async resetPassword(userEmail,Password){
 
-        return this.dao.resetPassword(userEmail,Password)
+        return await this.dao.resetPassword(userEmail,Password)
+    }
+
+    async updateUserRole(uid, role){
+            try {
+                return await this.dao.updateUserRole(uid, role)
+            } catch (error) {
+                req.logger.error(error)
+                console.log(error);
+            }
+        
     }
 
     

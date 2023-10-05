@@ -169,15 +169,16 @@ try {
 
 viewRouter.get('/current',middlewarePassportJWT,async(req, res) => {
          const user = req.user;
-            console.log("el user: ",user.user);
-            const allProducts =await prodsController.getProds()
-            const ownProds =await allProducts.filter((prod)=>prod.owner && prod.owner.toString() === user.user._id)
-            //console.log("Todos los prods: ",allProducts);
-            console.log("Mis productos",ownProds);
+         const userCart = user.user.cart
+         req.logger.debug("el user: ",user.user);
+            const allProducts =await prodsController.prodsPaginated()
+            const ownProds =await allProducts.docs.filter((prod)=>prod.owner && prod.owner.toString() === user.user._id)
+            req.logger.debug("Todos los prods: ",allProducts.docs);
+            req.logger.debug("Mis productos",ownProds);
             if (ownProds.length > 0) {
-                res.render('privateCurrent',{user, ownProds})
+                res.render('privateCurrent',{user, ownProds, userCart})
             }else{
-                res.render('privateCurrent',{user})
+                res.render('privateCurrent',{user, userCart})
             }          
 });
 

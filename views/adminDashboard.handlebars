@@ -60,18 +60,24 @@
     {{#if userID}}
     <label for="rol">Rol de usuario:</label>
     <br>
-    <br>
+    <br> 
     <select name="roleOwner">
-      <option name="owner"value="{{userID}}" id="ownerID">owner</option>
+      <option name="owner"value="{{userID}}" id="dataOwner">owner</option>
+    </select>
+    {{else}}
+    <select name="roleOwner">
+      <option name="owner"value="admin" id="dataOwner">admin</option>
     </select>
     {{/if}}
     <br>
     <br>
-    <button onclick="addProduct()">Enviar</button> 
+    <button onclick="addProduct()">Enviar</button>
+    </form>
+     
 
     
 
-</form>
+
 
 <hr>
         <h3>Delete Product</h3>

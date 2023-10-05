@@ -40,8 +40,8 @@ class ProductsController{
                 
             } catch (error) {
 
-                req.logger.error("Error products.controller: ", error);
-                
+                //req.logger.error("Error products.controller: ", error);
+                console.log("Error products.controller: ", error);
             }
             
         }
@@ -57,9 +57,13 @@ class ProductsController{
 
           }
 
-          prodsPaginated(limit =10, page=1, query=undefined, sort=undefined){
-            
-          return  this.service.prodsPaginated(limit, page, query, sort)
+          async prodsPaginated(limit =20, page=1, query=undefined, sort=undefined){
+            try {
+                return await this.service.prodsPaginated(limit, page, query, sort)
+            } catch (error) {
+                console.log(error);
+            }
+          
         }
 
 

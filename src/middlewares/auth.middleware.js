@@ -1,4 +1,5 @@
 import passport from 'passport';
+import prodsController from '../controllers/products.controller.js';
 
 //Middleware generico para pasar el userData
 
@@ -111,12 +112,22 @@ const middlewarePassportJWTUser = async (req, res, next) => {
 };
 
 const middlewareAccessToCart = async (req, res, next) => {
-	passport.authenticate('current', { session: false }, (err, usr, info) => {
-		
+	passport.authenticate('current', { session: false }, async(err, usr, info) => {
+
 		if (err) {
 			next(err);
 		}
+
+		const prodID =await req.params.pid;
+		const prod = await prodsController.getProductById(prodID)
+		console.log("el prod desde middleware: ", prod);
+		console.log("user id desde middle: ", usr.user._id);
+		if (prod && prod.owner.toString() === usr.user._id) {
+				console.log("El producto fue creado por el mismo usuario");
+				return res.send({"message":"No puede agregar al carrito productos que usted ha creado"});
+		} 
 		
+	
 			if(!usr){
 
 				return res.send({"message":"error de usuario"});

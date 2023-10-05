@@ -96,5 +96,9 @@ margin-left: 300px ;
 }
 
 
+/* current section */
 
-
+.current__cardsContainer{
+    display: flex;
+    flex-direction: column;
+}

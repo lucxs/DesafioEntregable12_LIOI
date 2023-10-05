@@ -38,6 +38,17 @@ class UsersController {
                 return userByEmail;
     }
 
+    async updateUserRole(uid, role){
+        try {
+            await this.service.updateUserRole(uid, role)
+        } catch (error) {
+            req.logger.error(error)
+            console.log(error);
+        }
+        
+
+    }
+
     async SendResetPassword(email){
 
         const mailOptions = {

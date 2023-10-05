@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2"
 
+
+const getDefaultOwner = () => {
+    return "admin";
+  };
+
 const productsScheme = new mongoose.Schema({
 
     title:{
@@ -32,14 +37,17 @@ const productsScheme = new mongoose.Schema({
             type: Array,
             default: []
     },
-    owner:{
-            type: mongoose.Schema.Types.ObjectId,
-             ref: 'usersJWT',
-             default:"admin"
-
+    ownerAdm: {
+        type: String,
+        default: null,
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "usersJWT",
+        default: null,
     }
+});
 
-})
 
 productsScheme.plugin(mongoosePaginate)
 
