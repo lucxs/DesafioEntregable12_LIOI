@@ -120,12 +120,16 @@ const middlewareAccessToCart = async (req, res, next) => {
 
 		const prodID =await req.params.pid;
 		const prod = await prodsController.getProductById(prodID)
-		console.log("el prod desde middleware: ", prod);
-		console.log("user id desde middle: ", usr.user._id);
-		if (prod && prod.owner.toString() === usr.user._id) {
-				console.log("El producto fue creado por el mismo usuario");
+		req.logger.debug("el prod desde middleware: ", prod);
+		req.logger.debug("user id desde middle: ", usr.user._id);
+
+		if (prod && prod.owner) {
+			if (prod.owner.toString() === usr.user._id) {
+				req.logger.debug("El producto fue creado por el mismo usuario");
 				return res.send({"message":"No puede agregar al carrito productos que usted ha creado"});
 		} 
+		}
+		
 		
 	
 			if(!usr){
